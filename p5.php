@@ -39,7 +39,7 @@ if(!isset($_SESSION["‘ID_user’"])) {
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos-login.css">
     <link rel="icon" type="image/png" href="img/logomini.png" />
-  
+    
     <meta name="google-signin-client_id" content="1081528677434-oc751ppavto9boc1ap67sae8tbheo2r2.apps.googleusercontent.com">
 </head>
 <body class="f_PC">
