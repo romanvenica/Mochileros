@@ -1,0 +1,27 @@
+
+En el archivo scrips.js cuando trabajas localmente tenes que poner 
+"var json = JSON.parse(JSON.stringify(data));"
+Y en el servidor hay que ponerle
+"var json = JSON.parse(data);"
+porque sino no anda
+
+-------------------------------------
+
+Link en Buscar Viaje 225:
+
+Estaba apuntando a 
+http://mochileros.esy.es/php/traerViaje.php
+lo cambie a
+php/traerViaje.php
+
+Sesion:
+
+Saqué la password y cambié Usarname por Root
+
+Php's:
+
+Cambio las variables por las locales
+
+-----------------
+
+Tuve que instalar CORS en Chrome
