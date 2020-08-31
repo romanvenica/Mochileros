@@ -500,7 +500,7 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
                   <option data-value="47" value="Eslovaco">
                   <option data-value="48" value="Esloveno">
                   <option data-value="49" value="Esloveno">
-                  <option data-value="50" value="Español">
+                  <option data-value="50" value="espanol">
                   <option data-value="51" value="Estonio">
                   <option data-value="52" value="Ewé">
                   <option data-value="53" value="Fante">
@@ -1034,11 +1034,13 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <script src="js/scrips.js"></script>
     <script src="js/buscarViaje.js"></script>
+
     <script>
 
-      $(document).ready(traerPuntos('<?php echo $id_viaje;?>'));
+    $(document).ready(traerPuntos('<?php echo $id_viaje;?>'));
 
     </script>
+    
 </body>
 </html>
 

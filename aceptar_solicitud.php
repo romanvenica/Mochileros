@@ -1,6 +1,11 @@
  <?php
-  session_start();
-  include("sesion.php");
+session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "u173991785_mochi";
+header('Content-Type: application/json');
+include("sesion.php");
 ?>
 
  <?php

@@ -6,7 +6,6 @@
   $ape = $_SESSION["‘Apellido’"];
 ?>
 
-
 <?php
 if(!isset($_SESSION["‘ID_user’"])) {
  header("location: index.html");

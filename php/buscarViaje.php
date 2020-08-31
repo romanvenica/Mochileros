@@ -1,8 +1,14 @@
 <?php
 session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "u173991785_mochi";
+header('Content-Type: application/json');
 include("../sesion.php");
 try
     {
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);         
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $intereses = $_POST['intereses'];
@@ -12,11 +18,14 @@ try
             JOIN usuario AS u ON v.id_usuario = u.id_usuario
             JOIN habla AS h ON u.id_usuario = h.id_usuario
             JOIN le_interesa AS i ON i.id_punto = p.id_punto
+
             JOIN origen AS o ON u.id_usuario = o.id_usuario
+            
             WHERE (v.id_escala = :escala) AND (o.ID_ORIGEN = :origen AND h.id_idioma = :idioma)
             AND (p.fecha_inicio BETWEEN :fecha_ini AND :fecha_fin OR p.fecha_fin BETWEEN :fecha_ini AND :fecha_fin)
             AND i.id_interes IN (".implode(',',$intereses).")
             ");
+
         
         $escala = $_POST['escala'];
         $origen = $_POST['origen'];
