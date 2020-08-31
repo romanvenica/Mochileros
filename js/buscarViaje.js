@@ -46,7 +46,7 @@ function buscarViaje(){
 	var fecha_fiF = fecha_fin;
 	var origen = "argentina";
 	var idioma = 50;
-	// Español
+	// espanol
 	var interesesChecked = [1,2,3,4,5,6,7,8];	
 
     
@@ -211,6 +211,7 @@ de los ID en el array. Porque lo hice asi? No me acuerdo. Jeje. En fin. La funci
 en el index de resultados[id_actual] y los pone en el mapa. Con los botones "siguiente" y "anterior" solamente se sube el valor 
 o se baja de id_actual en 1 (teniendo en cuenta que pudo haber llegado a uno de sus limites) y vuelve a llamar a traerPuntos
 */
+
 resultados_id = [];
 id_actual = 0;
  
@@ -234,9 +235,13 @@ function manejarResultado(result)
 
 
 var id_my_viaje;
+
 /*Trae los puntos. De que viaje? Del que este en el INDEX de id_actual*/
+
 function traerPuntos(e)
 {
+	console.log(e);
+	console.log("test222");
 	if (e) {
 		resultados_id[id_actual] = e;
 	}
@@ -263,8 +268,18 @@ function traerPuntos(e)
 		data: {'id_viaje' : resultados_id[id_actual]},
 		success: function (result) 
 			{
-			    
-				ponerPuntos(result);
+				console.log("punto");	
+
+				var timer = setInterval(function(){
+					if (map) {
+						ponerPuntos(result);
+						clearInterval(timer);
+					}else{
+						console.log(map);
+					}
+				}, 100);
+
+				
 			},
 	    error: function (xhr, status, error)
 	    {
@@ -425,8 +440,9 @@ function ponerPuntos(puntos)
 		markersMapa.push(marker);
 
 		/*Se lo setea los puntos en el mapa*/
-
+		console.log("ejecutar de vuelta")
 		marker.setMap(map);
+		console.log(map);
 	}
 
 	/*Con esto se crea la linea que los une*/
