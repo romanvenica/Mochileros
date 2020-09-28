@@ -455,6 +455,7 @@ function ponerPuntos(puntos)
 
   	/*Con esto se setea la linea en el mapa*/
 	flightPath.setMap(map);
+
 }
 
 

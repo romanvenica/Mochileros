@@ -33,6 +33,9 @@ html {
     }
 }
 
+.oculto{
+  display: none;
+}
 
 .error {
     color: red;
@@ -712,4 +715,10 @@ text-decoration:none;
 .inputTitulo{
   width: 50%;
   margin: auto;
+}
+
+#agregarPuntoDelMapa{
+  height: 50px;
+  width: 50px;
+
 }

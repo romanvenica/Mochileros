@@ -140,7 +140,7 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
           <div id="mapaGoogle" width="100%"></div>
             
           
-          <!-- <iframe src="https://www.google.com/maps/embed" width="100%" height="515" frameborder="0" style="border:0;" allowfullscreen></iframe> -->
+          <iframe src="https://www.google.com/maps/embed" width="100%" height="515" frameborder="0" style="border:0;" allowfullscreen></iframe>
           <div class="row">
             <div class="col-xs-6">
               <button type="button" onclick="puntoAnterior()" class="btn btn-primary botonAntSig">Anterior</button>
