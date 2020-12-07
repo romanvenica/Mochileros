@@ -129,13 +129,18 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
           </div>           
         </div>
 
+<div class="cajitaDeLosBotones">
+
+<button id="botonTest" onclick="botonazo()">botonazo</button>
+
 <input id="agregarPuntito" type="button" class="btn btn-primary oculto" value="Agregar puntito" onclick="agregarPuntito()"> 
 
 <input id="confirmarPuntito" type="button" class="btn btn-success oculto" value="Confirmar puntito" onclick="confirmarPuntito()"> 
 
+<input id="editarPuntito" type="button" class="btn btn-warning oculto" value="Confirmar edición" onclick="editarPuntito()"> 
 
-<br>
-<br>
+</div>
+
 <br>
 
 <div class="marco_escala">
@@ -490,6 +495,9 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
             </div>
           </div>
 </section>
+<br>
+  Puedo alejarme: <input id="puedoAlejarme" type="number" name="" placeholder="" class="form-control " onkeyup="maximoTres()" disabled> cuadras.
+<br>
 
 <br>
 

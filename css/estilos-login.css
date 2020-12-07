@@ -1,3 +1,23 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.cajitaDeLosBotones{
+  height: 40px;
+}
+
+#puedoAlejarme{
+  width: 100px;
+  display: inline ;
+}
+
 html {
     height: 100%;
 }
