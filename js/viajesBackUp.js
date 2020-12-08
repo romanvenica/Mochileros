@@ -150,46 +150,6 @@ function agregarPuntito(){
 		var agregarPuntito = document.getElementById("agregarPuntito");	
 	    	
 
-		if (this.estado == "rojo") 
-		{
-			infowindow.setContent(
-			'<div id="content" class="divInfoWindow">Punto sin guardar</div>'
-			);
-			document.getElementById("confirmarPuntito").classList.remove('oculto');
-			document.getElementById("agregarPuntito").classList.add('oculto');
-			desbloquearCampos();
-
-		} else if (this.estado == "verde")
-
-		{
-			infowindow.setContent(
-			'<div id="content" class="divInfoWindow">' +
-			'<div id="siteNotice">' +
-			'<input id="editarPuntito" type="button" class="btn btn-warning" value="Editar" onclick="editarPuntito('+listaDePuntos.indexOf(this)+')"> '+
-			'</div>'+
-			'</div>'
-			);
-
-			// Se fija si el ultimo punto es rojo
-			if (listaDePuntos[listaDePuntos.length-1].estado == "rojo") 
-			{
-				document.getElementById("confirmarPuntito").classList.add('oculto');
-				document.getElementById("agregarPuntito").classList.add('oculto');
-			}
-			else
-			{
-				document.getElementById("confirmarPuntito").classList.add('oculto');
-				document.getElementById("agregarPuntito").classList.remove('oculto');
-			}
-
-			bloquearCampos();
-		} 
-
-
-
-
-		/*
-		agregarEventListener(this);
 		if(listaDePuntos[listaDePuntos.length-1] == this )
 		{
 
@@ -244,8 +204,6 @@ function agregarPuntito(){
 
 		}
 
-		*/
-
 		infowindow.open(map, this);		
 
   	});
@@ -294,10 +252,9 @@ function desbloquearCampos()
 }
 
 
-
-document.getElementById('fechaDesde').valueAsDate = new Date();
-
-document.getElementById("fechaHasta").value = "2020-12-10";
+	
+document.getElementById("fechaDesde").value = "2020-12-08";
+document.getElementById("fechaHasta").value = "2020-12-09";
 	
 
 
@@ -349,7 +306,7 @@ function comprobarFechaLimites(){
 	
 	var fechaDentroDeDosAnios = new Date(new Date().setFullYear(new Date().getFullYear() + 2));
 	
-	if(fechaDesde2 < fechaHoy.setDate(fechaHoy.getDate() - 1)){
+	if(fechaDesde2 < fechaHoy){
 		alert("La fecha de inicio no puede ser anterior a la de hoy");
 		return false;
 	}
@@ -473,11 +430,9 @@ function guardarPuntito()
 	estePunto.setDraggable(false);
 	estePunto.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
 
-	estePunto.estado = "verde";
-
-
 
 	cambiarBotoncito();
+
 
 	ponerLineasMapa();
 
@@ -520,20 +475,15 @@ function maximoTres()
 function editarPuntito(punto)
 {
 
-	var estePunto = listaDePuntos[punto];
-
-	var posX = estePunto.getPosition().lat();
-	var posY = estePunto.getPosition().lng();
-	var myLatLng = new google.maps.LatLng(posX, posY);
-	posicionOriginal= myLatLng;
-
 	// Eliminar el ultimo punto si es editable.
-	if (listaDePuntos[listaDePuntos.length-1].estado == "rojo") 
+	/*
+	if(listaDePuntos[listaDePuntos.length-1].draggable == true)
 	{
-		listaDePuntos[listaDePuntos.length-1].setMap(null);
-		listaDePuntos.splice(-1,1);
+		listaDePuntos.pop();
 	}
+	*/
 
+	var estePunto = listaDePuntos[punto];
 
 	estePunto.addListener('click', function() 
 	{
@@ -546,8 +496,6 @@ function editarPuntito(punto)
 		'</div>'+
 		'</div>'
 		);
-
-		document.getElementById("agregarPuntito").classList.add('oculto');
 		desbloquearCampos();
 	});
 
@@ -583,17 +531,12 @@ function editarPuntito(punto)
 	'</div>'
 	);
 
-	estePunto =	listaDePuntos[punto];
-	estePunto.estado = "amarillo";
-
-
 	listaDePuntos[punto].setDraggable(true);
 
 	desbloquearCampos();
 
 }
 
-// Validaciones cuando se hace click en guardar.
 function confirmarEdicionPuntito(punto)
 {
 	var fechaActualDesde = document.getElementById("fechaDesde").value;
@@ -633,6 +576,7 @@ function editarPunto(punto)
 {
 	estePunto =	listaDePuntos[punto];
 	
+
 	//Guarda los datos nuevos
 
 	var fechaDesde = document.getElementById("fechaDesde").value;
@@ -672,7 +616,6 @@ function editarPunto(punto)
 	var agregarPuntito = document.getElementById("agregarPuntito");	
 	agregarPuntito.classList.remove("oculto");
 
-	estePunto.estado = "verde";
 	volverAPonerDialogos();
 
 }
@@ -689,7 +632,6 @@ function ponerLineasMapa()
 		var myLatLng = new google.maps.LatLng(posX, posY);
 		listaDeLineas.push(myLatLng);
 	}
-
 
 	if (flightPath) {
 		flightPath.setPath(listaDeLineas);
@@ -711,19 +653,6 @@ function ponerLineasMapa()
 
 function cancelarEdicionPuntito(punto)
 {
-	console.log(listaDePuntos);
-	estePunto =	listaDePuntos[punto];
-	console.log(posicionOriginal.lng());
-	var latlng = new google.maps.LatLng(posicionOriginal.lat(), posicionOriginal.lng());
-	estePunto.setPosition(latlng);
-
-
-	estePunto.estado = "amarillo";
-	estePunto.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-	estePunto.setDraggable(true);
-
-	infowindow.close();
-	volverAPonerDialogos();
 
 }
 
@@ -731,7 +660,6 @@ function cancelarEdicionPuntito(punto)
 // Vuelve a poner los diálogos a los puntos y los campos correspondientes.
 function volverAPonerDialogos()
 {
-
 	for(i=0; i<listaDePuntos.length;i++)
 	{
 		puntoMapa = listaDePuntos[i];
@@ -757,28 +685,11 @@ function volverAPonerDialogos()
 				}
 			}
 
+
+
 			var confirmarPuntito = document.getElementById("confirmarPuntito");
+			var editarPuntito = document.getElementById("editarPuntito");
 			var agregarPuntito = document.getElementById("agregarPuntito");	
-
-			infowindow.setContent(
-			'<div id="content" class="divInfoWindow">' +
-			'<div id="siteNotice">' +
-			'<input id="editarPuntito" type="button" class="btn btn-warning" value="Editar" onclick="editarPuntito('+listaDePuntos.indexOf(this)+')"> '+
-			'</div>'+
-			'</div>'
-			);
-
-			document.getElementById("confirmarPuntito").classList.add('oculto');
-			document.getElementById("agregarPuntito").classList.remove('oculto');
-
-
-			bloquearCampos();
-			infowindow.open(map, this);	
-  		});
-
-	}
-	/*
-
 		    	
 			// Se fija si estas tocando el punto ROJO 
 			if(listaDePuntos[listaDePuntos.length-1] == this )
@@ -839,8 +750,26 @@ function volverAPonerDialogos()
 
 	  	});
 	}
-	*/
 }
+
+/*
+
+aceptar
+	- Poner la nueva linea
+	- Guardar nuevos datos
+volver
+	- Volver a poner el coso donde estaba
+
+- Cambiar icono
+- Sacar Draggable
+
+- Volver a poner los iconos con sus event listener
+
+*/
+
+
+
+
 
 
 

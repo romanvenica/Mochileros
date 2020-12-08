@@ -131,7 +131,6 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
 
 <div class="cajitaDeLosBotones">
 
-<button id="botonTest" onclick="botonazo()">botonazo</button>
 
 <input id="agregarPuntito" type="button" class="btn btn-primary oculto" value="Agregar puntito" onclick="agregarPuntito()"> 
 
