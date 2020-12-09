@@ -86,7 +86,7 @@ function empezarRealmenteElViaje()
 }
 
 //Eliminar despues
-empezarRealmenteElViaje();
+//empezarRealmenteElViaje();
 
 var listaDePuntos = [];
 
@@ -159,6 +159,14 @@ function agregarPuntito(){
 			document.getElementById("agregarPuntito").classList.add('oculto');
 			desbloquearCampos();
 
+			// Busca fecha anterior
+			if (listaDePuntos.length > 1) 
+			{
+				var fechaPuntoAnterior = listaDePuntos[listaDePuntos.length-2].fechaHasta;
+				document.getElementById('fechaDesde').value = fechaPuntoAnterior;
+
+			}
+
 		} else if (this.estado == "verde")
 
 		{
@@ -185,66 +193,6 @@ function agregarPuntito(){
 			bloquearCampos();
 		} 
 
-
-
-
-		/*
-		agregarEventListener(this);
-		if(listaDePuntos[listaDePuntos.length-1] == this )
-		{
-
-			if (this.draggable == true) 
-			{
-				infowindow.setContent(
-					'<div id="content" class="divInfoWindow">Punto sin guardar</div>'
-				);
-				document.getElementById("confirmarPuntito").classList.remove('oculto');
-				desbloquearCampos();
-
-			}
-			else
-			{
-
-				infowindow.setContent(
-				'<div id="content" class="divInfoWindow">' +
-				'<div id="siteNotice">' +
-				'<input id="editarPuntito" type="button" class="btn btn-warning" value="Editar" onclick="editarPuntito('+listaDePuntos.indexOf(this)+')"> '+
-				'</div>'+
-				'</div>'
-				);
-
-				if (listaDePuntos[listaDePuntos.length-1].draggable == true) 
-				{
-					document.getElementById("confirmarPuntito").classList.add('oculto');
-					document.getElementById("agregarPuntito").classList.add('oculto');
-				}
-
-				bloquearCampos();
-
-			}
-		}
-		else
-		{
-
-			infowindow.setContent(
-			'<div id="content" class="divInfoWindow">' +
-			'<div id="siteNotice">' +
-			'<input id="editarPuntito" type="button" class="btn btn-warning" value="Editar" onclick="editarPuntito('+listaDePuntos.indexOf(this)+')"> '+
-			'</div>'+
-			'</div>'
-			);
-
-			if (listaDePuntos[listaDePuntos.length-1].draggable == true) 
-			{
-				document.getElementById("confirmarPuntito").classList.add('oculto');
-				document.getElementById("agregarPuntito").classList.add('oculto');
-			}
-
-			bloquearCampos();
-
-		}
-
-		*/
 
 		infowindow.open(map, this);		
 
@@ -294,10 +242,10 @@ function desbloquearCampos()
 }
 
 
-
+//Fecha de hoy
 document.getElementById('fechaDesde').valueAsDate = new Date();
 
-document.getElementById("fechaHasta").value = "2020-12-10";
+//document.getElementById("fechaHasta").value = "2020-12-10";
 	
 
 
@@ -527,7 +475,7 @@ function editarPuntito(punto)
 	var myLatLng = new google.maps.LatLng(posX, posY);
 	posicionOriginal= myLatLng;
 
-	// Eliminar el ultimo punto si es editable.
+	// Eliminar el ultimo punto si es rojo.
 	if (listaDePuntos[listaDePuntos.length-1].estado == "rojo") 
 	{
 		listaDePuntos[listaDePuntos.length-1].setMap(null);
@@ -541,7 +489,7 @@ function editarPuntito(punto)
 		'<div id="content" class="divInfoWindow">' +
 		'<div id="siteNotice">' +
 		'<input id="editarPuntito" type="button" class="btn btn-success" value="Guardar" onclick="confirmarEdicionPuntito('+punto+')"> '+
-		'<input id="eliminarPuntito" type="button" class="btn btn-danger" value="Eliminar" onclick="eliminarPuntito()"> '+
+		'<input id="eliminarPuntito" type="button" class="btn btn-danger" value="Eliminar" onclick="eliminarPuntito('+punto+')"> '+
 		'<input id="cancelarPuntito" type="button" class="btn btn-warning" value="Volver" onclick="cancelarEdicionPuntito('+punto+')"> '+
 		'</div>'+
 		'</div>'
@@ -577,7 +525,7 @@ function editarPuntito(punto)
 	'<div id="content" class="divInfoWindow">' +
 	'<div id="siteNotice">' +
 	'<input id="editarPuntito" type="button" class="btn btn-success" value="Guardar" onclick="confirmarEdicionPuntito('+punto+')"> '+
-	'<input id="eliminarPuntito" type="button" class="btn btn-danger" value="Eliminar" onclick="eliminarPuntito()"> '+
+	'<input id="eliminarPuntito" type="button" class="btn btn-danger" value="Eliminar" onclick="eliminarPuntito('+punto+')"> '+
 	'<input id="cancelarPuntito" type="button" class="btn btn-warning" value="Volver" onclick="cancelarEdicionPuntito('+punto+')"> '+
 	'</div>'+
 	'</div>'
@@ -597,6 +545,7 @@ function editarPuntito(punto)
 function confirmarEdicionPuntito(punto)
 {
 	var fechaActualDesde = document.getElementById("fechaDesde").value;
+	var fechaActualHasta = document.getElementById("fechaHasta").value;
 
 	if (comprobarFechaExiste()) 
 	{
@@ -606,21 +555,53 @@ function confirmarEdicionPuntito(punto)
 			{
 				if (comprobarCuadras()) 
 				{
+					//Si es el primero.
 					if (punto == 0) 
 					{
-						editarPunto(punto);
-					}
-					else
-					{
-						var fechaAnteriorHasta = listaDePuntos[punto-1].fechaHasta;
-						if (fechaActualDesde < fechaAnteriorHasta) 
+						var fechaPosteriorDesde = listaDePuntos[punto+1].fechaDesde;
+						if (fechaPosteriorDesde < fechaActualHasta) 
 						{
-							alert("La fecha Desde del punto NO puede ser anterior a la fecha Hasta del punto anterior.");
+							alert("La fecha Hasta del punto NO puede superar la fecha Desde del punto siguiente.");
 						}
 						else
 						{
 							editarPunto(punto);
 						}
+					}
+					// Si no es el primero.
+					else
+					{
+						// Si es el ultimo.
+						if (punto == listaDePuntos.length -1) 
+						{
+							var fechaAnteriorHasta = listaDePuntos[punto-1].fechaHasta;
+							if (fechaActualDesde < fechaAnteriorHasta) 
+							{
+								alert("La fecha Desde del punto NO puede ser anterior a la fecha Hasta del punto anterior.");
+							}
+							else editarPunto(punto);
+						}
+						else
+						{
+							var fechaAnteriorHasta = listaDePuntos[punto-1].fechaHasta;
+							if (fechaActualDesde < fechaAnteriorHasta) 
+							{
+								alert("La fecha Desde del punto NO puede ser anterior a la fecha Hasta del punto anterior.");
+							}
+							else
+							{
+							var fechaPosteriorDesde = listaDePuntos[punto+1].fechaDesde;
+							if (fechaPosteriorDesde < fechaActualHasta) 
+							{
+								alert("La fecha Hasta del punto NO puede superar la fecha Desde del punto siguiente.");
+							}
+							else
+							{
+								editarPunto(punto);
+							}
+						}
+						}
+						
 					}
 				}
 			}
@@ -675,6 +656,8 @@ function editarPunto(punto)
 	estePunto.estado = "verde";
 	volverAPonerDialogos();
 
+	bloquearCampos();
+
 }
 
 
@@ -720,11 +703,12 @@ function cancelarEdicionPuntito(punto)
 
 	estePunto.estado = "amarillo";
 	estePunto.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-	estePunto.setDraggable(true);
+	estePunto.setDraggable(false);
 
 	infowindow.close();
 	volverAPonerDialogos();
-
+	bloquearCampos();
+	document.getElementById("agregarPuntito").classList.remove('oculto');
 }
 
 
@@ -842,13 +826,79 @@ function volverAPonerDialogos()
 	*/
 }
 
+function eliminarPuntito(punto)
+{
+	estePunto =	listaDePuntos[punto];
+	var result = confirm("Estás seguro que quieres eliminarlo?");
+	if (result) {
+
+		listaDePuntos[punto].setMap(null);
 
 
+		listaDePuntos.splice(punto,1);
+
+		ponerLineasMapa();
+	}
+
+	volverAPonerDialogos();
+	limpiarCampos();
+	document.getElementById("agregarPuntito").classList.remove('oculto');
+
+}
 
 
+function confirmarViaje()
+{
+	if (listaDePuntos.length == 0) 
+	{
+		alert("Debes crear el menos una parada de viaje.")
+	}
+	else if (listaDePuntos.length == 1) 
+	{
+		if (listaDePuntos[listaDePuntos.length-1].estado == "rojo") 
+		{
+			alert("Debes confirmar el punto antes de guardar.")
+		}
+		else{
+			var result = confirm("Deseas cargar el viaje?");
+			if (result) 
+			{
+				subirViaje();
+			}
+		}
+	}
+}
 
+function subirViaje()
+{
+	var escalaInput = document.getElementById("escalaInput").value;
+	var escalaSubir = document.querySelector("#escala option[value='"+escalaInput+"']").dataset.value;
+	
 
+	var nombreSubir = $("#nombreViaje").val();
 
+	$.ajax({
+	    type: "POST",
+		url: "php/subirViaje.php",
+		dataType: "json",
+		data: {
+			'ID_ESCALA' : escalaSubir,
+			'NOMBRE' : nombreSubir
+			 },
+		success: function (result) 
+			{
+				console.log(result);
+				return true
+			},
+	    error: function (xhr, status, error)
+	    {
+	    	console.log(xhr);
+	    	console.log(status);
+	    	console.log(error);
+			console.log("error de consulta");
+	    }
+    });
+}
 
 
 

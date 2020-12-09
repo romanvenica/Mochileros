@@ -4,6 +4,9 @@
   $use = $_SESSION["‘ID_user’"];
   $nom = $_SESSION["‘Nombre’"];
   $ape = $_SESSION["‘Apellido’"];
+
+
+  
 ?>
 
 <?php
@@ -132,9 +135,9 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
 <div class="cajitaDeLosBotones">
 
 
-<input id="agregarPuntito" type="button" class="btn btn-primary oculto" value="Agregar puntito" onclick="agregarPuntito()"> 
+<input id="agregarPuntito" type="button" class="btn btn-primary oculto" value="Agregar punto" onclick="agregarPuntito()"> 
 
-<input id="confirmarPuntito" type="button" class="btn btn-success oculto" value="Confirmar puntito" onclick="confirmarPuntito()"> 
+<input id="confirmarPuntito" type="button" class="btn btn-success oculto" value="Confirmar punto" onclick="confirmarPuntito()"> 
 
 <input id="editarPuntito" type="button" class="btn btn-warning oculto" value="Confirmar edición" onclick="editarPuntito()"> 
 
@@ -498,8 +501,29 @@ while ($data_cli=mysqli_fetch_assoc($query_cli)) {
   Puedo alejarme: <input id="puedoAlejarme" type="number" name="" placeholder="" class="form-control " onkeyup="maximoTres()" disabled> cuadras.
 <br>
 
-<br>
 
+
+
+
+
+
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<br>
           <div class="row ">
             <div class="col-xs-8 col-xs-offset-2">
               <a href="#"><button id="empezarViajeBoton" onclick="empezarViaje()" type="button" class="botonBuscarFondoPantalla btn btn-lg  btn-block btn-warning">Empezar viaje</button></a>

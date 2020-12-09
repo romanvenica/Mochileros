@@ -167,6 +167,9 @@ function eliminar_amix(soli){
 }*/
 
 
+
+
+
 $(document).ready(function solicitudes() {
     var _urlform ='solisitudes.php';
     var id_yo = myvar;
@@ -661,3 +664,20 @@ $(document).ready(function origen() {
         $("#select_pais").prepend(texto);
     });
 });
+
+//############################################################
+
+
+$(document).ready(function origen() {
+    var _urlform ='subirViaje.php';
+    var id_yo = myvar;
+    $.post(_urlform,{id:id_yo},
+    function(data){
+        return true;
+    });
+});
+
+
+
+
+//############################################################

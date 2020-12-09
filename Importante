@@ -25,3 +25,12 @@ Cambio las variables por las locales
 -----------------
 
 Tuve que instalar CORS en Chrome
+
+
+-----------------
+
+Si voy a subir a la web hay que agregar el Auto Incremental a la tabla Viaje en el campo ID_ Viaje
+
+
+set FOREIGN_KEY_CHECKS=0; 
+ALTER TABLE  `user_customer_permission` DROP PRIMARY KEY , ADD PRIMARY KEY (  `id` )
