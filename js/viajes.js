@@ -877,6 +877,8 @@ function subirViaje()
 
 	var nombreSubir = $("#nombreViaje").val();
 
+	alert("Su punto ha sido guardado!");
+	/*
 	$.ajax({
 	    type: "POST",
 		url: "php/subirViaje.php",
@@ -898,6 +900,7 @@ function subirViaje()
 			console.log("error de consulta");
 	    }
     });
+	*/
 }
 
 

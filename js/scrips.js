@@ -637,7 +637,8 @@ $(document).ready(function paises() {
     var id_yo = myvar;
     $.post(_urlform,{id:id_yo},
     function(data){
-        var json = JSON.parse(data);
+        //var json = JSON.parse(data);
+        var json = JSON.parse(JSON.stringify(data));
         var texto = "";
         var pais_origen = "";
         
@@ -665,19 +666,3 @@ $(document).ready(function origen() {
     });
 });
 
-//############################################################
-
-
-$(document).ready(function origen() {
-    var _urlform ='subirViaje.php';
-    var id_yo = myvar;
-    $.post(_urlform,{id:id_yo},
-    function(data){
-        return true;
-    });
-});
-
-
-
-
-//############################################################
