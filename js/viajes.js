@@ -244,6 +244,7 @@ function desbloquearCampos()
 
 //Fecha de hoy
 document.getElementById('fechaDesde').valueAsDate = new Date();
+console.log(new Date());
 
 //document.getElementById("fechaHasta").value = "2020-12-10";
 	
@@ -877,8 +878,6 @@ function subirViaje()
 
 	var nombreSubir = $("#nombreViaje").val();
 
-	alert("Su punto ha sido guardado!");
-	/*
 	$.ajax({
 	    type: "POST",
 		url: "php/subirViaje.php",
@@ -889,6 +888,7 @@ function subirViaje()
 			 },
 		success: function (result) 
 			{
+				alert("Su punto ha sido guardado!");
 				console.log(result);
 				return true
 			},
@@ -900,7 +900,7 @@ function subirViaje()
 			console.log("error de consulta");
 	    }
     });
-	*/
+
 }
 
 
