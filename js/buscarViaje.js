@@ -136,8 +136,6 @@ if (interesesChecked == null || interesesChecked == "") {
 		$("#myModal").modal();
 	}
 if (escalaInput && fecha_fiF && origen && idiomaInput && interesesChecked) {
-	console.log (ID_origen);
-	console.log (idioma);
 	$('#t_modal').text('Sin coincidencias');
 	$('#m_modal').text(':(')
 }
@@ -240,8 +238,6 @@ var id_my_viaje;
 
 function traerPuntos(e)
 {
-	console.log(e);
-	console.log("test222");
 	if (e) {
 		resultados_id[id_actual] = e;
 	}
@@ -268,8 +264,6 @@ function traerPuntos(e)
 		data: {'id_viaje' : resultados_id[id_actual]},
 		success: function (result) 
 			{
-				console.log("punto");	
-
 				var timer = setInterval(function(){
 					if (map) {
 						ponerPuntos(result);
@@ -407,7 +401,8 @@ function ponerPuntos(puntos)
 					'Desde: '+this.fecha_inicio+'<br>'+
 					'Hasta: '+this.fecha_fin+'<br>'+
 					'Puedo alejarme hasta '+this.cuadras_extras+' cuadras de aqui!<br><br>'+
-					'<a name="del1" title="Eliminar" onclick="modal_eliminar_punto('+this.id_punto+')" class="btn btn-danger row-remove"><em class="glyphicon glyphicon-trash"></em></a>'+
+					// No se cuando apareció esto de que se pueda eliminar el viaje desde la busqueda 
+					//'<a name="del1" title="Eliminar" onclick="modal_eliminar_punto('+this.id_punto+')" class="btn btn-danger row-remove"><em class="glyphicon glyphicon-trash"></em></a>'+
 					'</div>'+
 					'</div>'
 					);
@@ -440,9 +435,7 @@ function ponerPuntos(puntos)
 		markersMapa.push(marker);
 
 		/*Se lo setea los puntos en el mapa*/
-		console.log("ejecutar de vuelta")
 		marker.setMap(map);
-		console.log(map);
 	}
 
 	/*Con esto se crea la linea que los une*/

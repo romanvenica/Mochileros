@@ -854,7 +854,7 @@ function confirmarViaje()
 	{
 		alert("Debes crear el menos una parada de viaje.")
 	}
-	else if (listaDePuntos.length == 1) 
+	else if (listaDePuntos.length >= 1) 
 	{
 		if (listaDePuntos[listaDePuntos.length-1].estado == "rojo") 
 		{
@@ -874,9 +874,31 @@ function subirViaje()
 {
 	var escalaInput = document.getElementById("escalaInput").value;
 	var escalaSubir = document.querySelector("#escala option[value='"+escalaInput+"']").dataset.value;
-	
 
 	var nombreSubir = $("#nombreViaje").val();
+
+
+	var puntosSubir = [];
+
+	for (var i = 0; i < listaDePuntos.length; i++) {
+
+		var punto = [];
+		var posX = listaDePuntos[i].getPosition().lat();
+		punto.push(posX);
+		var posY = listaDePuntos[i].getPosition().lng();
+		punto.push(posY);
+		var fechaD = listaDePuntos[i].fechaDesde;
+		punto.push(fechaD);
+		var fechaH = listaDePuntos[i].fechaHasta;
+		punto.push(fechaH);
+		var alejarme = listaDePuntos[i].puedoAlejarme;
+		punto.push(alejarme);
+
+		var intereses = listaDePuntos[i].intereses;
+		punto.push(intereses);
+
+		puntosSubir.push(punto);
+	}
 
 	$.ajax({
 	    type: "POST",
@@ -884,13 +906,15 @@ function subirViaje()
 		dataType: "json",
 		data: {
 			'ID_ESCALA' : escalaSubir,
-			'NOMBRE' : nombreSubir
+			'NOMBRE' : nombreSubir,
+			'PUNTOS' : puntosSubir
 			 },
 		success: function (result) 
 			{
-				alert("Su punto ha sido guardado!");
+				alert("Su viaje ha sido guardado!");
+				console.log("True");
 				console.log(result);
-				return true
+				return true;
 			},
 	    error: function (xhr, status, error)
 	    {

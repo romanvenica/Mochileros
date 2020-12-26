@@ -14,7 +14,7 @@ try
 
  		
 
-        // Traer el ultimo ID_Viaje
+        ///////// Traer el ultimo ID_Viaje ////////
         $stmt = $conn->prepare("SELECT max(ID_Viaje) FROM viaje");
 
         $stmt->execute();
@@ -26,7 +26,7 @@ try
 
       
         
-        // Insertar el viaje
+        //////// Insertar el viaje /////////
         $stmt = $conn->prepare("INSERT INTO viaje (ID_VIAJE, ID_Usuario, ID_ESCALA, NOMBRE)
             VALUES ($ID_Nuevo, :ID_Usuario, :ID_ESCALA, :NOMBRE)");
 
@@ -37,21 +37,70 @@ try
         $stmt->bindParam(':NOMBRE', $NOMBRE);
 
 
-    	$ID_Usuario = $_SESSION["‘ID_user’"];
+        $PUNTOS = $_POST['PUNTOS'];
+    	
+        $ID_Usuario = $_SESSION["‘ID_user’"];
         $ID_ESCALA = $_POST['ID_ESCALA'];
     	$NOMBRE = $_POST['NOMBRE'];
 
 
         $stmt->execute();
 
-        echo json_encode ("ok");
+
+        //////// Insertar los puntos /////////
+        foreach ($PUNTOS as $PUNTO) {
+
+            $fecha1 = date('Y-m-d', strtotime($PUNTO[2]));
+            $fecha2 = date('Y-m-d', strtotime($PUNTO[3]));
+
+                
+            $stmt = $conn->prepare("INSERT INTO punto (ID_VIAJE, ID_Usuario, EJE_X, EJE_Y, FECHA_INICIO, FECHA_FIN, RADIO_EXTRA)
+                VALUES ($ID_Nuevo, $ID_Usuario, $PUNTO[0], $PUNTO[1], '$fecha1', '$fecha2', $PUNTO[4])");
+
+            $stmt->execute();
 
 
 
-        // Insertar los puntos
+            //Necesito el numero del punto
+            $stmt = $conn->prepare("SELECT max(ID_Punto) FROM punto");
+
+            $stmt->execute();
+
+            $row = $stmt->fetch();
+
+            $ID_Punto_Nuevo = $row[0];
 
 
-        //$stmt = $conn->prepare("SELECT max(ID_VIAJE) FROM viaje");
+
+
+            // Guardo los intereses
+
+
+            for ($i=0; $i < count($PUNTO[5]) ; $i++) { 
+                if ($PUNTO[5][$i] == "true") {
+                    $iTemp = $i+1;
+                    $stmt = $conn->prepare("INSERT INTO le_interesa (ID_PUNTO, ID_VIAJE, ID_Usuario, ID_Interes)
+                    VALUES ($ID_Punto_Nuevo, $ID_Nuevo, $ID_Usuario, $iTemp)");
+                    
+                    $stmt->execute();
+                }
+
+            }
+
+        }
+
+
+
+
+        echo json_encode ($PUNTO[5]);
+
+        /*
+        echo json_encode ($fecha2);
+        echo json_encode ($date1);
+        echo json_encode ($date2);
+        echo json_encode ($PUNTO[2]);
+        echo json_encode ($PUNTO[3]);
+        */
 
 
 
@@ -60,9 +109,7 @@ try
 catch(PDOException $e)
     {
         echo $e->getMessage();
-        echo json_encode ($result);
-        
-
+        echo json_encode ($iTemp);
     }
 /*
 
