@@ -93,8 +93,7 @@ if (!empty($nombre)) {
     header("location: p2.php");exit();
   }
   else {
-    echo "Error al modificar el usuario.";
-    echo "Error: " . $editar_perfil . "<br>" . $mysqli->error;
+    echo $pais;
   }
 }
 ?>
